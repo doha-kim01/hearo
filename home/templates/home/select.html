@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="display: flex; justify-content: space-between;align-items: center; height: 100vh;">
+    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+        <img src="/static/doctor.png" alt="Doctor" style="max-width: 300px; height: auto; margin-bottom: 30px;">
+        <button onclick="location.href='/mic/mic';" style="font-size: 32px;">마이크: 의사선생님의 진단을 듣고 싶어요!</button>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+        <img src="/static/camera.png" alt="Camera" style="max-width: 300px; height: auto; margin-bottom: 30px;">
+        <button onclick="location.href='{% url 'home:camera' %}';" style="font-size: 32px;">카메라: 의사선생님께 말을 전달하고 싶어요!</button>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Hearo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        function startSpeechToText() {
+            $.ajax({
+                url: "/mic/apic",
+                type: "post",
+                success: function (data) {
+                    document.getElementById('stt').innerHTML = data;
+                    // 재귀 호출로 계속해서 음성 인식을 수행하고 결과를 업데이트합니다.
+                    startSpeechToText();
+                }
+            });
+        }
+
+        function stopSpeechToText() {
+            // 재귀 호출을 멈추기 위해 아무 작업도 수행하지 않습니다.
+        }
+
+        function goToCameraPage() {
+            window.location.href = "{% url 'home:camera' %}";
+        }
+    </script>
+    <style>
+        .image-container {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+        }
+
+        .image-container img {
+            max-width: 100px;
+            height: auto;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>음성 진단 페이지입니다.</h1>
+    <h2>아래 "음성 인식 시작" 버튼을 누르고 말씀해주세요.</h2>
+
+    <a href="javascript:void(0);" onclick="startSpeechToText();" style="font-size: 20px;">음성 인식 시작</a>
+    <br>
+    <a href="javascript:void(0);" onclick="stopSpeechToText();", style="font-size: 20px;">음성 인식 멈춤</a>
+    <br>
+    <br>
+    <h2>음성 인식 결과</h2><br>
+    <div id="stt"></div>
+
+    <div class="image-container">
+        <div style="text-align: center;">
+            <img src="/static/photography.png" alt="Photography" onclick="goToCameraPage();">
+        </div>
+        <p style="text-align: center;">카메라 전환을 원하시면 위의 아이콘을 클릭해주세요</p>
+    </div>
+</body>
+</html>
+{% endblock %}

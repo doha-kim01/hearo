@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .image {
+            width: auto;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .speech-bubble {
+            position: relative;
+            background-color: lightgray;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 20px;
+            margin-left: 50px;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            right: -20px;
+            width: 0;
+            height: 0;
+            border: 30px solid transparent;
+	        border-right-color: lightgray;
+	        border-left: 0;
+	        border-bottom: 0;
+	        margin-top: -15px;
+	        margin-left: -30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image">
+            <img src="/static/doctorgroup.png" alt="Doctor">
+        </div>
+        <div class="speech-bubble">
+            <p>{{ stt }}</p>
+        </div>
+    </div>
+</body>
+</html>
