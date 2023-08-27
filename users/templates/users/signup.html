@@ -4,6 +4,13 @@
     <form method="post" action="{% url 'users:signup' %}">
         {% csrf_token %}
         {% include "users/form_errors.html" %}
+        <div class="container">
+            <div class="row justify-content-start align-items-center vh-10">
+                <div class="col-md-8 text-start ml-auto" style="margin-left: -15px;">
+                    <p class="fs-3">이어로 회원가입</p>
+                </div>
+            </div>
+        </div>
         <div class="mb-3">
             <label for="username">사용자 이름</label>
             <input type="text" class="form-control" name="username" id="username"
@@ -24,7 +31,7 @@
             <input type="text" class="form-control" name="email" id="email"
                    value="{{ form.email.value|default_if_none:'' }}">
         </div>
-        <button type="submit" class="btn btn-primary">생성하기</button>
+        <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
 </div>
 {% endblock %}

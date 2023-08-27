@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .realtimeapicall import RGspeech
 import time
 from django.http import HttpResponse, JsonResponse
@@ -21,6 +21,12 @@ def apic(request): #api 호출 함수
         stt += new_stt
         print(new_stt)
         print(stt)
-        break
+
+        if "끝입니다" in stt:
+            # return redirect('/home/camera')
+            time.sleep((1))
+
     time.sleep(0.01)
+        # \\break
+    # time.sleep(0.01)
     return render(request, 'mic/result.html', {'stt' : stt})
