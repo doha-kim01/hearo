@@ -8,6 +8,8 @@ import torchvision.transforms as transforms
 from django.http import StreamingHttpResponse
 from camera.models import MyModel
 import threading
+from PIL import ImageFont, ImageDraw, Image
+import torch.nn.functional as F
 
 # 모델 경로와 디바이스 설정
 model = MyModel()
@@ -36,6 +38,7 @@ class VideoCamera(object):
             if not self.grabbed:
                 break
 
+#-*- coding: utf-8 -*- 
 
 # 프레임 처리 및 예측 함수
 def process_frame(frame, model):
@@ -68,14 +71,39 @@ def process_frame(frame, model):
             frame_tensor = frame_tensor.unsqueeze(0)  # Add batch dimension
 
         output = model.model(frame_tensor)
+        probabilities = F.softmax(output, dim=1)
+        
+    class_mapping = {
+        0: "가슴",
+        1: "귀",
+        2: "너무 아파요",
+        3: "머리",
+        4: "목",
+        5: "무릎",
+        6: "발",
+        7: "발가락",
+        8: "발목",
+        9: "배",
+        10: "손가락",
+        11: "손목",
+        12: "어깨",
+        13: "팔꿈치",
+        14: "허리"
+        # 추가적인 클래스와 번호를 매핑하면 됩니다.
+    }
 
 
     # 예측 결과 가져오기
     _, predicted_idx = torch.max(output.data, 1)
-    predicted_class = predicted_idx.item()
-    print(predicted_class)
-
-    return predicted_class
+    predicted_class_num = predicted_idx.item()
+    #print(predicted_class)
+    predicted_class_name = class_mapping.get(predicted_class_num, "알 수 없음")
+    predicted_probability = probabilities[0][predicted_idx].item()
+    
+    print(predicted_class_name)
+    print(f"Class Probability: {predicted_probability:.2f}")
+    
+    return predicted_class_name, predicted_probability
 
 # 비디오 프레임을 가져오고 예측 결과를 반환하는 함수
 def get_video_frame(cam, model):
@@ -84,11 +112,27 @@ def get_video_frame(cam, model):
         frame_np = np.frombuffer(frame, np.uint8)  # 바이트 데이터를 NumPy 배열로 변환
         frame_img = cv2.imdecode(frame_np, cv2.IMREAD_COLOR)  # NumPy 배열을 이미지로 디코딩
         frame_img_rgb = cv2.cvtColor(frame_img, cv2.COLOR_BGR2RGB)
-        predicted_class = process_frame(frame_img_rgb, model)
+        predicted_class, predicted_probability = process_frame(frame_img_rgb, model)
+        print(predicted_class, predicted_probability)
+        
+        pil_image = Image.fromarray(frame_img_rgb)
 
         # 예측 결과 표시
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(frame_img_rgb, f"Predicted Class: {predicted_class}", (10, 30), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
+        #font = cv2.FONT_HERSHEY_SIMPLEX
+        font = ImageFont.truetype('/Users/song-yeojin/hearoweb/hearo/static/fonts/NanumGothic.ttf',40)
+        draw = ImageDraw.Draw(pil_image)
+        text = f"Predicted Class: {predicted_class}"
+        text_prob = f"Probability: {predicted_probability:.2f}"
+        text_position = (10, 30)
+        text_position_prob = (10, 80) #확률 위치
+        text_color = (0, 255, 0)  # Green color (RGB format)
+        draw.text(text_position, text, font=font, fill=text_color) # 클래스
+        draw.text(text_position_prob, text_prob, font=font, fill=text_color) #확률
+        
+        
+        frame_img_rgb = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+
+        #cv2.putText(frame_img_rgb, f"Predicted Class: {predicted_class}", (10, 30), font, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         ret, jpeg = cv2.imencode('.jpg', frame_img_rgb)
         frame_bytes = jpeg.tobytes()
