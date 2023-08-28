@@ -1,15 +1,20 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-
-<div style="display: flex; justify-content: space-between;align-items: center; height: 100vh;">
-    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-        <img src="/static/doctor.png" alt="Doctor" style="max-width: 300px; height: auto; margin-bottom: 30px;">
-        <button onclick="location.href='/mic/mic';" style="font-size: 32px;">마이크: 의사선생님의 진단을 듣고 싶어요!</button>
+<div class="container">
+  <div class="row justify-content-center align-items-center vh-100">
+    <div class="col-md-8 text-center">
+      <p class="fs-3">진료 시작 버튼을 누르시면 수어 인식 화면으로 넘어갑니다.</p>
+      <p class="fs-5">진료를 시작하시겠습니까?</p>
+      <button class="btn btn-primary" onclick="redirectToCamera()">진료 시작</button>
     </div>
-    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-        <img src="/static/camera.png" alt="Camera" style="max-width: 300px; height: auto; margin-bottom: 30px;">
-        <button onclick="location.href='{% url 'home:camera' %}';" style="font-size: 32px;">카메라: 의사선생님께 말을 전달하고 싶어요!</button>
-    </div>
+  </div>
 </div>
+
+<script>
+function redirectToCamera() {
+  window.location.href = '/camera/camera';
+}
+</script>
 {% endblock %}
+

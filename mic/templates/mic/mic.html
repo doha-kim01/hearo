@@ -38,6 +38,15 @@
         function goToCameraPage() {
             window.location.href = "{% url 'home:camera' %}";
         }
+
+<!--        function redirectToCamera() {-->
+<!--            window.location.href = "{% url 'home:camera' %}";-->
+<!--        }-->
+
+<!--        // "끝입니다"가 감지되면 페이지 이동 함수 호출-->
+<!--        if (document.getElementById('stt').textContent.includes('끝입니다')) {-->
+<!--            redirectToCamera();-->
+<!--        }-->
     </script>
     <style>
         .image-container {
@@ -55,23 +64,39 @@
 </head>
 
 <body>
-    <h1>음성 진단 페이지입니다.</h1>
-    <h2>아래 "음성 인식 시작" 버튼을 누르고 말씀해주세요.</h2>
+    <div class="container">
+        <div class="row justify-content-center align-items-start vh-100">
+            <div class="col-md-8 text-center">
+            <br><br>
+            <p class="fs-5">의료 기관의 음성 인식을 시작하겠습니다.</p>
+            <p class="fs-5">아래의 "음성 인식 시작" 버튼을 눌러주세요.</p>
+            <button href="javascript:void(0);" class="btn btn-primary" onclick="startSpeechToText();" style="font-size: 20px;">음성 인식 시작</button>
+            <br><br><br>
+            <p class="fs-4">음성 인식 결과</p>
+            </div>
+        </div>
+    </div>
 
-    <a href="javascript:void(0);" onclick="startSpeechToText();" style="font-size: 20px;">음성 인식 시작</a>
-    <br>
-    <a href="javascript:void(0);" onclick="stopSpeechToText();", style="font-size: 20px;">음성 인식 멈춤</a>
-    <br>
-    <br>
-    <h2>음성 인식 결과</h2><br>
     <div id="stt"></div>
 
-    <div class="image-container">
-        <div style="text-align: center;">
-            <img src="/static/photography.png" alt="Photography" onclick="goToCameraPage();">
+    <div class="row justify-content-center" style="margin-top: -200px;">
+        <div class="col-md-5 text-center">
+            <button class="btn btn-primary" onclick="redirectToCamera()" style="font-size: 20px;">다시 수어 버튼</button>
         </div>
-        <p style="text-align: center;">카메라 전환을 원하시면 위의 아이콘을 클릭해주세요</p>
     </div>
+
+<!--    <div class="image-container">-->
+<!--        <div style="text-align: center;">-->
+<!--            <img src="/static/photography.png" alt="Photography" onclick="goToCameraPage();">-->
+<!--        </div>-->
+<!--        <p style="text-align: center;">카메라 전환을 원하시면 위의 아이콘을 클릭해주세요</p>-->
+<!--    </div>-->
+
+<script>
+function redirectToCamera() {
+  window.location.href = '/camera/camera';
+}
+</script>
 </body>
 </html>
 {% endblock %}

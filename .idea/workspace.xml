@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce81beb5-5c27-4cf2-bae1-6c7966e6ff2f" name="Changes" comment="모델 업데이트">
+      <change afterPath="$PROJECT_DIR$/camera/templates/camera/camera.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/select.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/select.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mic/templates/mic/mic.html" beforeDir="false" afterPath="$PROJECT_DIR$/mic/templates/mic/mic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mic/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mic/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/templates/users/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
