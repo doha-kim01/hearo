@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators import gzip
 import cv2
 import numpy as np
@@ -45,7 +45,7 @@ def process_frame(frame, model):
     # 프레임 전처리
     transform = transforms.Compose([
         transforms.ToPILImage(),
-        transforms.Resize((224, 224)),
+        transforms.Resize((112, 112)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
@@ -156,3 +156,26 @@ def camera(request):
     except Exception as e:
         print("에러입니다:", str(e))
         pass
+
+# new code
+# def camera(request):
+#     try:
+#         cam = VideoCamera()  # 웹캠 호출
+#         return render(request, 'camera/camera.html')
+#     except Exception as e:
+#         print("에러입니다:", str(e))
+#         return render(request, 'camera/camera.html')
+#
+# def redirect_to_mic(request):
+#     return redirect('/mic/mic')
+#
+# def get_camera_stream(cam, model):
+#     while True:
+#         frame = get_video_frame(cam, model)  # 프레임 가져오기
+#         yield (b'--frame\r\n'
+#                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')  # 이미지 프레임 반환
+#
+# def camera_stream(request):
+#     cam = VideoCamera()  # 웹캠 호출
+#     return StreamingHttpResponse(get_camera_stream(cam, model), content_type="multipart/x-mixed-replace;boundary=frame")
+#
